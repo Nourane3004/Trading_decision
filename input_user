@@ -1,0 +1,69 @@
+ def get_user_inputs(self):
+        """Collecte les inputs spécifiques pour l'analyse macro"""
+        print("\n" + "="*70)
+        print("🌍 MACRO-VISION: CONFIGURATION DE L'ANALYSE MACROÉCONOMIQUE")
+        print("="*70)
+
+        # 1. Focus géographique
+        print("\n📍 FOCUS GÉOGRAPHIQUE PRINCIPAL")
+        print("-" * 40)
+        print("Options: US, EU, CN, JP, EM (marchés émergents), GLOBAL")
+        country_focus = input("Région principale [US]: ").strip().upper() or "US"
+
+        # 2. Horizon d'investissement
+        print("\n⏰ HORIZON TEMPOREL D'INVESTISSEMENT")
+        print("-" * 40)
+        print("Options: court (1-3 mois), moyen (3-12 mois), long (1-3 ans)")
+        horizon = input("Horizon [moyen]: ").strip().lower() or "moyen"
+
+        # 3. Profil de risque macro
+        print("\n⚠️  PROFIL DE RISQUE MACRO")
+        print("-" * 40)
+        print("Options: conservateur, modéré, agressif")
+        risk_tolerance = input("Tolérance risque [modéré]: ").strip().lower() or "modéré"
+
+        # 4. Classes d'actifs d'intérêt
+        print("\n📊 CLASSES D'ACTIFS À ANALYSER")
+        print("-" * 40)
+        print("Options: actions, obligations, devises, matières premières, crypto")
+        assets_input = input("Classes (séparer par des virgules) [actions,obligations]: ").strip()
+        if assets_input:
+            investment_universe = [a.strip().lower() for a in assets_input.split(',')]
+        else:
+            investment_universe = ['actions', 'obligations']
+
+        # 5. Exposition du portefeuille (optionnel)
+        print("\n🏦 EXPOSITION ACTUELLE DU PORTEFEUILLE (optionnel)")
+        print("-" * 40)
+        print("Format: Secteur:Pourcentage (ex: Technologie:30, Santé:20)")
+        print("Laissez vide si inconnu ou nouveau portefeuille")
+
+        portfolio_input = input("Exposition secteur: ").strip()
+        if portfolio_input:
+            self.parse_portfolio_exposure(portfolio_input)
+
+        # 6. Préoccupations spécifiques
+        print("\n🎯 PRÉOCCUPATIONS/RISQUES SPÉCIFIQUES")
+        print("-" * 40)
+        print("Options: inflation, récession, tensions géopolitiques, taux d'intérêt")
+        print("         élections, politique commerciale, risques systémiques")
+        concerns_input = input("Risques à surveiller (séparer par virgules): ").strip()
+        specific_concerns = [c.strip().lower() for c in concerns_input.split(',')] if concerns_input else []
+
+        # Sauvegarder le profil
+        self.user_profile = {
+            'country_focus': country_focus,
+            'analysis_horizon': horizon,
+            'risk_tolerance': risk_tolerance,
+            'investment_universe': investment_universe,
+            'specific_concerns': specific_concerns,
+            'timestamp': datetime.now().isoformat()
+        }
+
+        print(f"\n✅ Profil macro enregistré:")
+        print(f"   • Focus: {country_focus}")
+        print(f"   • Horizon: {horizon}")
+        print(f"   • Risque: {risk_tolerance}")
+        print(f"   • Actifs: {', '.join(investment_universe)}")
+
+        return self.user_profile
